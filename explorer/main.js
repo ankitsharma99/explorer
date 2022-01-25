@@ -36,6 +36,22 @@ function sendFiles(srcFile, dest, category) {
     console.log(fileName, 'copied to ', category);
 }
 
+function treeHelper(dirPath, indent) {
+    let isFile = fs.lstatSync(dirPath).isFile();
+    if(isFile) {
+        let fileName = path.basename(dirPath);
+        console.log(indent+ " ├─── "+ fileName);
+    }else {
+        let dirName = path.basename(dirPath);
+        console.log(indent + " └─── " + dirName);
+        let children = fs.readdirSync(dirPath);
+        for(let i = 0; i<children.length; i++) {
+            let childPath = path.join(dirPath, children[i]);
+            treeHelper(childPath, indent + "\t");
+        }
+    }
+}
+
 let command = inputArr[0];
 switch(command) {
     case "tree":
@@ -53,7 +69,19 @@ switch(command) {
 }
 
 function treeFn(dirPath) {
-    
+    // let destPath;
+    if(dirPath === undefined) {
+        console.log(`Please enter the path, you entered ${dirPath}`);
+        return;
+    }else {
+        let doesExist = fs.existsSync(dirPath);
+        if(doesExist) {
+            treeHelper(dirPath, '');
+        } else {
+            console.log(`Please enter the correct path, you entered ${dirPath}`);
+            return;
+        }
+    }
 }
 function organizeFn(dirPath) {
     let destPath;
