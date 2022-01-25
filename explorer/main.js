@@ -3,10 +3,11 @@ const fs = require('fs');
 const path =  require('path');
 
 let types = {
-    media: ['mp4', 'mkv'],
+    videos: ['mp4', 'mkv'],
     archives: ['zip', '7z', 'rar', 'tar', 'gz', 'ar', 'iso', 'xz'],
-    documents: ['docx', 'doc', 'pdf', 'xlsx', 'xls', 'odt', 'ods', 'odp', 'odg', 'odf', 'txt', 'ps', 'htm', 'html'],
-    app: ['exe', 'dmg', 'pkg', 'deb']
+    documents: ['docx', 'doc', 'pdf', 'xlsx', 'xls', 'odt', 'ods', 'odp', 'odg', 'odf', 'txt', 'ps', 'htm', 'html', 'pptx'],
+    app: ['exe', 'dmg', 'pkg', 'deb'],
+    images: ['jpg', 'jpeg', 'png']
 };
 
 function getCategory(name) {
@@ -14,7 +15,7 @@ function getCategory(name) {
     ext = ext.slice(1);
 
     for(let type in types) {
-        let currType = types[type];     // currType is an array
+        let currType = types[type]; 
         for(let i = 0; i<currType.length; i++) {
             if(ext === currType[i]) {
                 return type;
